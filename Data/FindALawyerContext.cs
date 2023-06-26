@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FindALawyer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FindALawyer.Data
 {
@@ -8,5 +9,7 @@ namespace FindALawyer.Data
     : base(options)
         {
         }
+
+        public DbSet<Client> Client { get; set; } = default!;
     }
 }
