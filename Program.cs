@@ -1,4 +1,5 @@
 using FindALawyer.Data;
+using FindALawyer.Services.JwtService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -39,6 +40,8 @@ namespace FindALawyer
                     .AllowCredentials();
                 });
             });
+
+            builder.Services.AddScoped<IJwtService, JwtServiceImpl>();
 
 
             // Add services to the container.
