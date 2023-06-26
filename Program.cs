@@ -57,6 +57,10 @@ namespace FindALawyer
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("AllowOrigins");
+
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
 
