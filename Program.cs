@@ -1,5 +1,6 @@
 using FindALawyer.Data;
 using FindALawyer.Services.JwtService;
+using FindALawyer.Services.PasswordService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -42,6 +43,7 @@ namespace FindALawyer
             });
 
             builder.Services.AddScoped<IJwtService, JwtServiceImpl>();
+            builder.Services.AddScoped<IPasswordService, PasswordServiceImpl>();
 
 
             // Add services to the container.
