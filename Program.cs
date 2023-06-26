@@ -1,5 +1,8 @@
 using FindALawyer.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace FindALawyer
 {
@@ -11,6 +14,20 @@ namespace FindALawyer
 
             builder.Services.AddDbContext<FindALawyerContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("FindALawyerContext") ?? throw new InvalidOperationException("Connection string 'FindALawyerContext' not found.")));
+
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+                        .GetBytes(builder.Configuration.GetSection("AppSettings:JwtSecret").Value)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
 
             // Add services to the container.
