@@ -29,6 +29,17 @@ namespace FindALawyer
                 };
             });
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigins", policy =>
+                {
+                    policy.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .WithOrigins("http://localhost:5173")
+                    .AllowCredentials();
+                });
+            });
+
 
             // Add services to the container.
 
