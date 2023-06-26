@@ -11,5 +11,7 @@ namespace FindALawyer.Data
         }
 
         public DbSet<Client> Client { get; set; } = default!;
+
+        public DbSet<Lawyer> Lawyer { get; set; } = default!;
     }
 }
