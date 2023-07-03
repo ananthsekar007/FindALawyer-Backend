@@ -15,5 +15,9 @@ namespace FindALawyer.Dao.LawyerDao
         public string Password { get; set; } = string.Empty;
 
         public string Address { get; set; } = string.Empty;
+
+        public string Qualification { get; set; } = string.Empty;
+
+        public string Type { get; set; } = string.Empty;
     }
 }
