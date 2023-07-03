@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using FindALawyer.Data;
-using FindALawyer.Models;
 using FindALawyer.Services.ClientAuthService;
 using FindALawyer.Dao;
 using FindALawyer.Dao.ClientDao;
@@ -35,6 +28,17 @@ namespace FindALawyer.Controllers
 
             return Ok(authResponse.Response);
 
+        }
+
+        [HttpPost("login")]
+
+        public async Task<ActionResult<ServiceResponse<ClientAuthResponse>>> ClientLogin([FromBody] LoginInput loginInput)
+        {
+            ServiceResponse<ClientAuthResponse> authResponse = await _clientAuthService.Login(loginInput);
+
+            if (authResponse.Error != null) return BadRequest(authResponse.Error);
+
+            return Ok(authResponse.Response);
         }
     }
 }
