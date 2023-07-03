@@ -5,6 +5,7 @@ using FindALawyer.Models;
 using FindALawyer.Services.JwtService;
 using FindALawyer.Services.PasswordService;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace FindALawyer.Services.ClientAuthService
 {
@@ -21,9 +22,47 @@ namespace FindALawyer.Services.ClientAuthService
             _jwtService = jwtService;
         }
 
-        public Task<ServiceResponse<ClientAuthResponse>> Login(LoginInput loginInput)
+        public async Task<ServiceResponse<ClientAuthResponse>> Login(LoginInput loginInput)
         {
-            throw new NotImplementedException();
+            ServiceResponse<ClientAuthResponse> serviceResponse = new ServiceResponse<ClientAuthResponse>();
+
+            if (_context.Client is null)
+            {
+                serviceResponse.Error = "Client Context not found";
+                return serviceResponse;
+            }
+
+            Client existingClient = await _context.Client.FirstOrDefaultAsync(c => c.EmailAddress == loginInput.Email);
+
+            if(existingClient is null)
+            {
+                serviceResponse.Error = "No user exists with this email!";
+                return serviceResponse;
+            }
+
+            if(!_passwordService.VerifyPasswordHash(loginInput.Password, existingClient.PasswordHash, existingClient.PasswordSalt))
+            {
+                serviceResponse.Error = "Please check the credentials and try again!";
+                return serviceResponse;
+            }
+
+            AppUser appUser = new()
+            {
+                Email = existingClient.EmailAddress,
+                Role = "CLIENT"
+            };
+
+            string jwtToken = _jwtService.CreateToken(appUser);
+
+            ClientAuthResponse clientAuthResponse = new()
+            {
+                Client = existingClient,
+                AuthToken = jwtToken
+            };
+
+            serviceResponse.Response = clientAuthResponse;
+            return serviceResponse;
+
         }
 
         public async Task<ServiceResponse<ClientAuthResponse>> SignUp(ClientAuthInput authInput)
