@@ -29,7 +29,20 @@ namespace FindALawyer.Controllers
 
             if(addAppointment.Error is not null) return BadRequest(addAppointment.Error);
             return Ok(addAppointment.Response);
+        }
 
+        [HttpGet("client/get")]
+        public async Task<ActionResult<ServiceResponse<ICollection<Appointment>>>> GetAppointmentsForClients([FromQuery] int clientId, [FromQuery] string status)
+        {
+            ServiceResponse<ICollection<Appointment>> response = await _appointmentService.GetAppointmentsForClients(clientId, status);
+            return Ok(response);
+        }
+
+        [HttpGet("lawyers/get")]
+        public async Task<ActionResult<ServiceResponse<ICollection<Appointment>>>> GetAppointmentsForLawyers([FromQuery] int lawyerId, [FromQuery] string status)
+        {
+            ServiceResponse<ICollection<Appointment>> response = await _appointmentService.GetAppointmentsForLawyers(lawyerId, status);
+            return Ok(response);
         }
     }
 }

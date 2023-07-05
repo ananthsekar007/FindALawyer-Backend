@@ -4,6 +4,7 @@ using FindALawyer.Data;
 using FindALawyer.Models;
 using FindALawyer.Services.ClientService;
 using FindALawyer.Services.LawyerService;
+using Microsoft.EntityFrameworkCore;
 
 namespace FindALawyer.Services.AppointmentService
 {
@@ -52,6 +53,26 @@ namespace FindALawyer.Services.AppointmentService
             appointmentResponse.Response = "Appointment booked successfully!";
             return appointmentResponse;
 
+        }
+
+        public async Task<ServiceResponse<ICollection<Appointment>>> GetAppointmentsForClients(int clientId, string status)
+        {
+            ServiceResponse<ICollection<Appointment>> response = new ServiceResponse<ICollection<Appointment>>();
+
+            ICollection<Appointment> appointments = await _context.Appointment.Include(a => a.Client).Include(a => a.Lawyer).Where(a => a.ClientId == clientId && a.Status == status).ToListAsync();
+
+            response.Response = appointments;
+            return response;
+        }
+
+        public async Task<ServiceResponse<ICollection<Appointment>>> GetAppointmentsForLawyers(int clientId, string status)
+        {
+            ServiceResponse<ICollection<Appointment>> response = new ServiceResponse<ICollection<Appointment>>();
+
+            ICollection<Appointment> appointments = await _context.Appointment.Include(a => a.Client).Include(a =>a.Lawyer).Where(a => a.LawyerId == clientId && a.Status == status).ToListAsync();
+
+            response.Response = appointments;
+            return response;
         }
     }
 }
