@@ -30,7 +30,7 @@ namespace FindALawyer.Controllers
         [HttpGet("getall")]
         public async Task<ActionResult<ServiceResponse<ICollection<LawyerWithRatings>>>> GetLawyers()
         {
-            ServiceResponse<ICollection<LawyerWithRatings>> lawyers = await _lawyerService.getAllLawyersWithRatings();
+            ServiceResponse<ICollection<LawyerWithRatings>> lawyers = await _lawyerService.GetAllLawyersWithRatings();
 
             return Ok(lawyers.Response);
         }
