@@ -1,5 +1,7 @@
 using FindALawyer.Data;
+using FindALawyer.Services.AppointmentService;
 using FindALawyer.Services.ClientAuthService;
+using FindALawyer.Services.ClientService;
 using FindALawyer.Services.JwtService;
 using FindALawyer.Services.LawyerAuthService;
 using FindALawyer.Services.LawyerService;
@@ -49,7 +51,9 @@ namespace FindALawyer
             builder.Services.AddScoped<IPasswordService, PasswordServiceImpl>();
             builder.Services.AddScoped<IClientAuthService, ClientAuthServiceImpl>();
             builder.Services.AddScoped<ILawyerAuthService, LawyerAuthServiceImpl>();
-            builder .Services.AddScoped<ILawyerService, LawyerServiceImpl>();
+            builder.Services.AddScoped<ILawyerService, LawyerServiceImpl>();
+            builder.Services.AddScoped<IAppointmentService, AppointmentServiceImpl>();
+            builder.Services.AddScoped<IClientService, ClientServiceImpl>();
 
 
             // Add services to the container.
