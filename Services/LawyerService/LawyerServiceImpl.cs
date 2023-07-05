@@ -4,6 +4,7 @@ using FindALawyer.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using FindALawyer.Models;
 
 namespace FindALawyer.Services.LawyerService
 {
@@ -16,7 +17,7 @@ namespace FindALawyer.Services.LawyerService
             _context = context;
         }
 
-        public async Task<ServiceResponse<ICollection<LawyerWithRatings>>> getAllLawyersWithRatings()
+        public async Task<ServiceResponse<ICollection<LawyerWithRatings>>> GetAllLawyersWithRatings()
         {
 
             ServiceResponse<ICollection<LawyerWithRatings>> serviceResponse = new();
@@ -41,6 +42,14 @@ namespace FindALawyer.Services.LawyerService
             serviceResponse.Response = lawyers;
             return serviceResponse;
             
+        }
+
+        public async Task<bool> IsValidLawyer(int lawyerId)
+        {
+            Lawyer existingLawyer = await _context.Lawyer.FindAsync(lawyerId);
+            if (existingLawyer == null) return false;
+            return true;
+
         }
     }
 }

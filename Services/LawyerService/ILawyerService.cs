@@ -5,6 +5,8 @@ namespace FindALawyer.Services.LawyerService
 {
     public interface ILawyerService
     {
-        Task<ServiceResponse<ICollection<LawyerWithRatings>>> getAllLawyersWithRatings();
+        Task<ServiceResponse<ICollection<LawyerWithRatings>>> GetAllLawyersWithRatings();
+
+        Task<bool> IsValidLawyer(int lawyerId);
     }
 }
