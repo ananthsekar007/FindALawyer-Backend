@@ -17,6 +17,8 @@ namespace FindALawyer.Data
 
         public DbSet<Feedback> Feedback { get; set; } = default!;
 
+        public DbSet<Appointment> Appointment { get; set; } = default!;
+
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
 
