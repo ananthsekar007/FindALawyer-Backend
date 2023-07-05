@@ -31,6 +31,8 @@ namespace FindALawyer.Models
 
         public string Address { get; set; } = string.Empty;
 
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
+
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
