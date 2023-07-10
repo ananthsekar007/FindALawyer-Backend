@@ -19,19 +19,9 @@ namespace FindALawyer.Data
 
         public DbSet<Appointment> Appointment { get; set; } = default!;
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
+        public DbSet<RazorPayPayments> RazorPayments { get; set; } = default!;
 
-        //    modelBuilder.Entity<Lawyer>()
-        //        .HasMany(l => l.Client)
-        //        .WithMany()
-        //        .HasForeignKey(c => c.ClientId);
+        public DbSet<Payment> Payment { get; set; } = default!;
 
-        //    modelBuilder.Entity<Feedback>()
-        //        .HasOne(f => f.Lawyer)
-        //        .WithMany()
-        //        .HasForeignKey(l => l.LawyerId);
-
-        //}
     }
 }
