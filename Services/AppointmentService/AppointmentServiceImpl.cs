@@ -74,5 +74,25 @@ namespace FindALawyer.Services.AppointmentService
             response.Response = appointments;
             return response;
         }
+
+        public async Task<ServiceResponse<string>> UpdateStatus(int appointmentId, string status)
+        {
+            ServiceResponse<string> response = new ServiceResponse<string>();
+
+            Appointment existingAppointment = await _context.Appointment.FindAsync(appointmentId);
+
+            if(existingAppointment is null)
+            {
+                response.Error = "No appointment available with the given details!";
+                return response;
+            }
+
+            existingAppointment.Status = status;
+            await _context.SaveChangesAsync();
+
+            response.Response = "Appointment Updated successfully!";
+            return response;
+
+        }
     }
 }

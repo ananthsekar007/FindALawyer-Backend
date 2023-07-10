@@ -10,5 +10,7 @@ namespace FindALawyer.Services.AppointmentService
         Task<ServiceResponse<ICollection<Appointment>>> GetAppointmentsForClients(int clientId, string status);
         Task<ServiceResponse<ICollection<Appointment>>> GetAppointmentsForLawyers(int clientId, string status);
 
+        Task<ServiceResponse<string>> UpdateStatus(int appointmentId,  string status);
+
     }
 }

@@ -10,6 +10,7 @@ using FindALawyer.Models;
 using FindALawyer.Dao;
 using FindALawyer.Dao.AppointmentDao;
 using FindALawyer.Services.AppointmentService;
+using System.Security.Policy;
 
 namespace FindALawyer.Controllers
 {
@@ -43,6 +44,15 @@ namespace FindALawyer.Controllers
         {
             ServiceResponse<ICollection<Appointment>> response = await _appointmentService.GetAppointmentsForLawyers(lawyerId, status);
             return Ok(response);
+        }
+
+        [HttpPut("update")]
+        public async Task<ActionResult<ServiceResponse<string>>> UpdateAppointment(UpdateAppointmentInput updateAppointmentInput)
+        {
+            ServiceResponse<string> updateResponse = await _appointmentService.UpdateStatus(updateAppointmentInput.AppointmentId, updateAppointmentInput.Status);
+
+            if (updateResponse.Error is not null) return BadRequest(updateResponse.Error);
+            return Ok(updateResponse);
         }
     }
 }
