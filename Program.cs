@@ -6,6 +6,7 @@ using FindALawyer.Services.JwtService;
 using FindALawyer.Services.LawyerAuthService;
 using FindALawyer.Services.LawyerService;
 using FindALawyer.Services.PasswordService;
+using FindALawyer.Services.PaymentService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -54,6 +55,7 @@ namespace FindALawyer
             builder.Services.AddScoped<ILawyerService, LawyerServiceImpl>();
             builder.Services.AddScoped<IAppointmentService, AppointmentServiceImpl>();
             builder.Services.AddScoped<IClientService, ClientServiceImpl>();
+            builder.Services.AddScoped<IPaymentService, PaymentServiceImpl>();
 
 
             // Add services to the container.

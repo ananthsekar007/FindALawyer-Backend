@@ -75,6 +75,12 @@ namespace FindALawyer.Services.AppointmentService
             return response;
         }
 
+        public async Task<bool> IsAppointmentValid(int appointmentId)
+        {
+            return await _context.Appointment.AnyAsync(a => a.AppointmentId == appointmentId);
+        }
+
+
         public async Task<ServiceResponse<string>> UpdateStatus(int appointmentId, string status)
         {
             ServiceResponse<string> response = new ServiceResponse<string>();

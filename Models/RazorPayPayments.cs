@@ -11,7 +11,7 @@ namespace FindALawyer.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RazorPayId { get; set; }
 
-        public string PaymenrOrderId { get; set; } = string.Empty;
+        public string PaymentOrderId { get; set; } = string.Empty;
 
         [AllowNull]
         public string? PaymentId { get; set; } = string.Empty;

@@ -18,9 +18,8 @@ namespace FindALawyer.Models
 
         public string Status { get; set; } = "PENDING";
 
-        [AllowNull]
-        [ForeignKey("RazorPayments")]
-        public int? payment_reference_id { get; set; } = null;
+        [ForeignKey("RazorPayments"), Column("payment_reference_id"), AllowNull]
+        public int? paymentReferenceId { get; set; } = null;
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
