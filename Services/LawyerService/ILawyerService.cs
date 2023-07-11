@@ -8,5 +8,7 @@ namespace FindALawyer.Services.LawyerService
         Task<ServiceResponse<ICollection<LawyerWithRatings>>> GetAllLawyersWithRatings();
 
         Task<bool> IsValidLawyer(int lawyerId);
+
+        Task<ServiceResponse<string>> RateALawyer(Rating ratingInput);
     }
 }

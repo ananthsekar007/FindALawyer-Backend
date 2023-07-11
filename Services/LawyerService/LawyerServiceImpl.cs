@@ -51,5 +51,33 @@ namespace FindALawyer.Services.LawyerService
             return true;
 
         }
+
+        public async Task<ServiceResponse<string>> RateALawyer(Rating ratingInput)
+        {
+            ServiceResponse<string> serviceResponse = new();
+
+            Feedback existingfeedback = await _context.Feedback.FirstOrDefaultAsync(f => f.ClientId == ratingInput.ClientId && f.LawyerId == ratingInput.LawyerId);
+
+            if(existingfeedback is not null)
+            {
+                serviceResponse.Error = "You already rated this lawyer!";
+                return serviceResponse;
+            }
+
+            Feedback newFeedback = new Feedback()
+            {
+                ClientId = ratingInput.ClientId,
+                LawyerId = ratingInput.LawyerId,
+                Rating = ratingInput.RatingValue,
+                Remarks = ratingInput.Remarks
+            };
+
+            await _context.Feedback.AddAsync(newFeedback);
+            await _context.SaveChangesAsync();
+
+            serviceResponse.Response = "Lawyer rated successfully!";
+            return serviceResponse;
+
+        }
     }
 }
