@@ -1,6 +1,5 @@
 ﻿using FindALawyer.Dao;
 using FindALawyer.Models;
-using Razorpay.Api;
 
 namespace FindALawyer.Services.PaymentService
 {
@@ -11,5 +10,7 @@ namespace FindALawyer.Services.PaymentService
         Task<ServiceResponse<string>> RequestPayment(int appointmentId, float amount);
 
         Task<ServiceResponse<string>> UpdatePaymentOnSuccess(string orderId,  string paymentId);
+
+        Task<ServiceResponse<ICollection<Payment>>> GetAllPaymentsForAppointment(int appointmentId);
     }
 }

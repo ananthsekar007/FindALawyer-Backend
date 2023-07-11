@@ -63,6 +63,16 @@ namespace FindALawyer.Services.PaymentService
 
         }
 
+        public async Task<ServiceResponse<ICollection<Models.Payment>>> GetAllPaymentsForAppointment(int appointmentId)
+        {
+            ServiceResponse<ICollection<Models.Payment>> response = new ServiceResponse<ICollection<Models.Payment>>();
+
+            ICollection<Models.Payment> payments = await _context.Payment.Include(p => p.Appointment).Include(p => p.RazorPayments).Where(p => p.AppointmentId == appointmentId).ToListAsync();
+
+            response.Response = payments;
+            return response;
+        }
+
         public async Task<ServiceResponse<string>> RequestPayment(int appointmentId, float amount)
         {
             ServiceResponse<string> response = new ServiceResponse<string>();
