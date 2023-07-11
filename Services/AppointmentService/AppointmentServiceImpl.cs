@@ -4,6 +4,7 @@ using FindALawyer.Data;
 using FindALawyer.Models;
 using FindALawyer.Services.ClientService;
 using FindALawyer.Services.LawyerService;
+using FindALawyer.Services.PaymentService;
 using Microsoft.EntityFrameworkCore;
 
 namespace FindALawyer.Services.AppointmentService
@@ -53,6 +54,30 @@ namespace FindALawyer.Services.AppointmentService
             appointmentResponse.Response = "Appointment booked successfully!";
             return appointmentResponse;
 
+        }
+
+        public async Task<ServiceResponse<string>> CompleteAppointment(int appointmentId)
+        {
+            ServiceResponse<string> response = new ServiceResponse<string>();
+            bool isValidAppointment = await this.IsAppointmentValid(appointmentId);
+            if(!isValidAppointment)
+            {
+                response.Error = "The appointment is not valid!";
+                return response;
+            }
+
+            ICollection<Payment> payments = await _context.Payment.Where(p => p.AppointmentId == appointmentId).ToListAsync();
+            if(payments.Count != 0)
+            {
+                response.Error = "Cannot Complete the appointment because some payments are pending!";
+                return response;
+            }
+            Appointment existingAppointment = await _context.Appointment.FindAsync(appointmentId);
+            existingAppointment.Status = "COMPLETED";
+            await _context.SaveChangesAsync();
+
+            response.Response = "Appointment marked as complete!";
+            return response;
         }
 
         public async Task<ServiceResponse<ICollection<Appointment>>> GetAppointmentsForClients(int clientId, string status)

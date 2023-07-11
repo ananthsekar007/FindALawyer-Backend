@@ -12,6 +12,8 @@ namespace FindALawyer.Services.AppointmentService
 
         Task<ServiceResponse<string>> UpdateStatus(int appointmentId,  string status);
 
+        Task<ServiceResponse<string>> CompleteAppointment(int appointmentId);
+
         Task<bool> IsAppointmentValid(int appointmentId);
 
     }
