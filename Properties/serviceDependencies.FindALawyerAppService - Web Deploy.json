@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/FindALawyerapi/apis/FindALawyerAPI",
+      "type": "apis.azure"
+    },
+    "identityapp1": {
+      "ignored": "true",
+      "type": "identityapp"
+    },
+    "mssql1": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/find-a-lawyer/databases/find-a-lawyer",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:FindALawyerContext"
+    }
+  }
+}
