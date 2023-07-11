@@ -54,5 +54,14 @@ namespace FindALawyer.Controllers
             if (updateResponse.Error is not null) return BadRequest(updateResponse.Error);
             return Ok(updateResponse);
         }
+
+        [HttpPut("complete")]
+        public async Task<ActionResult<ServiceResponse<string>>> CompleteAppointment(UpdateAppointmentInput input)
+        {
+            ServiceResponse<string> updateResponse = await _appointmentService.CompleteAppointment(input.AppointmentId);
+
+            if (updateResponse.Error is not null) return BadRequest(updateResponse.Error);
+            return Ok(updateResponse);
+        }
     }
 }
