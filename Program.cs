@@ -39,12 +39,11 @@ namespace FindALawyer
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowOrigins", policy =>
+                options.AddDefaultPolicy(builder =>
                 {
-                    policy.AllowAnyHeader()
-                    .AllowAnyMethod()
-                    .WithOrigins("http://localhost:5173")
-                    .AllowCredentials();
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader();
                 });
             });
 
@@ -53,9 +52,9 @@ namespace FindALawyer
             builder.Services.AddScoped<IClientAuthService, ClientAuthServiceImpl>();
             builder.Services.AddScoped<ILawyerAuthService, LawyerAuthServiceImpl>();
             builder.Services.AddScoped<ILawyerService, LawyerServiceImpl>();
+            builder.Services.AddScoped<IPaymentService, PaymentServiceImpl>();
             builder.Services.AddScoped<IAppointmentService, AppointmentServiceImpl>();
             builder.Services.AddScoped<IClientService, ClientServiceImpl>();
-            builder.Services.AddScoped<IPaymentService, PaymentServiceImpl>();
 
 
             // Add services to the container.
@@ -74,7 +73,7 @@ namespace FindALawyer
                 app.UseSwaggerUI();
             }
 
-            app.UseCors("AllowOrigins");
+            app.UseCors();
 
             app.UseAuthentication();
 
