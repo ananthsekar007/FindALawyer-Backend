@@ -26,13 +26,21 @@ namespace FindALawyer.Controllers
             _lawyerService = lawyerService;
         }
 
-        [Authorize(Roles = "CLIENT")]
         [HttpGet("getall")]
         public async Task<ActionResult<ServiceResponse<ICollection<LawyerWithRatings>>>> GetLawyers()
         {
             ServiceResponse<ICollection<LawyerWithRatings>> lawyers = await _lawyerService.GetAllLawyersWithRatings();
 
             return Ok(lawyers.Response);
+        }
+
+        [HttpPost("/rate")]
+        public async Task<ActionResult<ServiceResponse<string>>> RateALawyer(Rating ratingInput)
+        {
+            ServiceResponse<string> response = await _lawyerService.RateALawyer(ratingInput);
+            if(response.Error != null) return BadRequest(response.Error);
+            return Ok(response.Response);
+
         }
 
     }
