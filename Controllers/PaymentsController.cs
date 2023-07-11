@@ -25,7 +25,7 @@ namespace FindALawyer.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet]
+        [HttpGet("/getall")]
         public async Task<ActionResult<ServiceResponse<ICollection<Models.Payment>>>> GetPaymentsForAppointment([FromQuery] int appointmentId)
         {
             ServiceResponse<ICollection<Models.Payment>> response = await _paymentService.GetAllPaymentsForAppointment(appointmentId);

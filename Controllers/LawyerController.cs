@@ -34,7 +34,7 @@ namespace FindALawyer.Controllers
             return Ok(lawyers.Response);
         }
 
-        [HttpPost("/rate")]
+        [HttpPost("rate")]
         public async Task<ActionResult<ServiceResponse<string>>> RateALawyer(Rating ratingInput)
         {
             ServiceResponse<string> response = await _lawyerService.RateALawyer(ratingInput);
