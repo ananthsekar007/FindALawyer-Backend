@@ -27,6 +27,7 @@ namespace FindALawyer.Controllers
         }
 
         [HttpGet("getall")]
+        [Authorize]
         public async Task<ActionResult<ServiceResponse<ICollection<LawyerWithRatings>>>> GetLawyers()
         {
             ServiceResponse<ICollection<LawyerWithRatings>> lawyers = await _lawyerService.GetAllLawyersWithRatings();
@@ -35,6 +36,7 @@ namespace FindALawyer.Controllers
         }
 
         [HttpPost("rate")]
+        [Authorize]
         public async Task<ActionResult<ServiceResponse<string>>> RateALawyer(Rating ratingInput)
         {
             ServiceResponse<string> response = await _lawyerService.RateALawyer(ratingInput);

@@ -11,6 +11,7 @@ using FindALawyer.Services.PaymentService;
 using FindALawyer.Dao;
 using FindALawyer.Dao.PaymentDao;
 using Razorpay.Api;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FindALawyer.Controllers
 {
@@ -25,7 +26,8 @@ namespace FindALawyer.Controllers
             _configuration = configuration;
         }
 
-        [HttpGet("/getall")]
+        [HttpGet("getall")]
+        [Authorize]
         public async Task<ActionResult<ServiceResponse<ICollection<Models.Payment>>>> GetPaymentsForAppointment([FromQuery] int appointmentId)
         {
             ServiceResponse<ICollection<Models.Payment>> response = await _paymentService.GetAllPaymentsForAppointment(appointmentId);
@@ -33,6 +35,7 @@ namespace FindALawyer.Controllers
         }
 
         [HttpPost("request")]
+        [Authorize]
         public async Task<ActionResult<ServiceResponse<string>>> RequestPayment(RequestPayment requestPayment)
         {
             ServiceResponse<string> response = await _paymentService.RequestPayment(requestPayment.AppointmentId, requestPayment.Amount);
@@ -41,6 +44,7 @@ namespace FindALawyer.Controllers
         }
 
         [HttpPost("create-order")]
+        [Authorize]
         public async Task<ActionResult<ServiceResponse<RazorPayPayments>>> CreateOrder(CreateOrder createOrder)
         {
             ServiceResponse<RazorPayPayments> response = await _paymentService.CreateOrder(createOrder.PaymentId, createOrder.Amount, _configuration);
@@ -49,6 +53,7 @@ namespace FindALawyer.Controllers
         }
 
         [HttpPost("success")]
+        [Authorize]
         public async Task<ActionResult<ServiceResponse<string>>> UpdatePaymentOnSuccess(UpdatePayment updatePayment)
         {
             ServiceResponse<string> response = await _paymentService.UpdatePaymentOnSuccess(updatePayment.OrderId, updatePayment.PaymentId);

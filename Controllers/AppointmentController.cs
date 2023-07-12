@@ -11,6 +11,7 @@ using FindALawyer.Dao;
 using FindALawyer.Dao.AppointmentDao;
 using FindALawyer.Services.AppointmentService;
 using System.Security.Policy;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FindALawyer.Controllers
 {
@@ -24,6 +25,7 @@ namespace FindALawyer.Controllers
         }
 
         [HttpPost("book")]
+        [Authorize]
         public async Task<ActionResult<ServiceResponse<string>>> BookAppointment(AddAppointmentInput addAppointmentInput)
         {
             ServiceResponse<string> addAppointment= await _appointmentService.BookAppointment(addAppointmentInput);
@@ -33,6 +35,7 @@ namespace FindALawyer.Controllers
         }
 
         [HttpGet("client/get")]
+        [Authorize]
         public async Task<ActionResult<ServiceResponse<ICollection<Appointment>>>> GetAppointmentsForClients([FromQuery] int clientId, [FromQuery] string status)
         {
             ServiceResponse<ICollection<Appointment>> response = await _appointmentService.GetAppointmentsForClients(clientId, status);
@@ -40,6 +43,7 @@ namespace FindALawyer.Controllers
         }
 
         [HttpGet("lawyers/get")]
+        [Authorize]
         public async Task<ActionResult<ServiceResponse<ICollection<Appointment>>>> GetAppointmentsForLawyers([FromQuery] int lawyerId, [FromQuery] string status)
         {
             ServiceResponse<ICollection<Appointment>> response = await _appointmentService.GetAppointmentsForLawyers(lawyerId, status);
@@ -47,6 +51,7 @@ namespace FindALawyer.Controllers
         }
 
         [HttpPut("update")]
+        [Authorize]
         public async Task<ActionResult<ServiceResponse<string>>> UpdateAppointment(UpdateAppointmentInput updateAppointmentInput)
         {
             ServiceResponse<string> updateResponse = await _appointmentService.UpdateStatus(updateAppointmentInput.AppointmentId, updateAppointmentInput.Status);
@@ -56,6 +61,7 @@ namespace FindALawyer.Controllers
         }
 
         [HttpPut("complete")]
+        [Authorize]
         public async Task<ActionResult<ServiceResponse<string>>> CompleteAppointment(UpdateAppointmentInput input)
         {
             ServiceResponse<string> updateResponse = await _appointmentService.CompleteAppointment(input.AppointmentId);
