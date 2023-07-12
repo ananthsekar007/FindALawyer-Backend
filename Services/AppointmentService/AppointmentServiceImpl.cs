@@ -65,8 +65,9 @@ namespace FindALawyer.Services.AppointmentService
                 response.Error = "The appointment is not valid!";
                 return response;
             }
-
-            ICollection<Payment> payments = await _context.Payment.Where(p => p.AppointmentId == appointmentId).ToListAsync();
+            Console.WriteLine("The appointment id is " +  appointmentId);
+            ICollection<Payment> payments = await _context.Payment.Where(p => p.AppointmentId == appointmentId && p.Status == "PENDING").ToListAsync();
+            Console.WriteLine("The number of payments" + payments.Count);
             if(payments.Count != 0)
             {
                 response.Error = "Cannot Complete the appointment because some payments are pending!";
